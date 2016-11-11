@@ -129,7 +129,7 @@ trait RestException
      */
     protected function isApiCall(Request $request)
     {
-        if( strpos($request->getUri(), 'api') || $request->wantsJson()) {
+        if (strpos($request->getUri(), 'api') || $request->wantsJson()) {
             return true;
         }
 
@@ -152,7 +152,7 @@ trait RestException
             $traces = $exception->getTrace();
 
             if (!empty($traces)) {
-                foreach ($traces as $trace){
+                foreach ($traces as $trace) {
                     unset($trace['args']);
                     $this->trace[] = $trace;
                 }
