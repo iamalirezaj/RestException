@@ -25,7 +25,7 @@ class Handler extends ExceptionHandler
     /**
      * Use rest exception in class
      */
-    use RestException;
+    use \Josh\Exception\RestException;
 ```
 
 * then call the renderRestException method in render method
