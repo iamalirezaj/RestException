@@ -29,8 +29,8 @@ trait RestException
      * Creates a new JSON response based on exception type.
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
-     * @param Exception $exception
+     * @since  11 Nov 2016
+     * @param  Exception $exception
      * @return \Anetwork\Respond\Facades\Respond
      */
     protected function getJsonResponseForException(Exception $exception)
@@ -39,9 +39,9 @@ trait RestException
 
         $this->getTrace($exception);
 
-        if($exception instanceof ModelNotFoundException){
+        if($exception instanceof ModelNotFoundException) {
             return $this->modelNotFound($message);
-        } elseif($exception instanceof NotFoundHttpException){
+        } elseif($exception instanceof NotFoundHttpException) {
             return $this->httpNotFound();
         } elseif($exception instanceof BadRequestHttpException) {
             return $this->badRequest($message);
@@ -54,8 +54,8 @@ trait RestException
      * Returns json response for generic bad request.
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
-     * @param string $message
+     * @since  11 Nov 2016
+     * @param  string $message
      * @return \Anetwork\Respond\Facades\Respond
      */
     protected function badRequest($message)
@@ -71,8 +71,8 @@ trait RestException
      * Returns json response ErrorException
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
-     * @param $message
+     * @since  11 Nov 2016
+     * @param  $message
      * @return \Anetwork\Respond\Facades\Respond
      */
     protected function errorException($message)
@@ -88,8 +88,8 @@ trait RestException
      * Returns json response for Eloquent model not found exception.
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
-     * @param string $message
+     * @since  11 Nov 2016
+     * @param  string $message
      * @return \Anetwork\Respond\Facades\Respond
      */
     protected function modelNotFound($message)
@@ -105,7 +105,7 @@ trait RestException
      * Returns json response for Eloquent model not found exception.
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
+     * @since  11 Nov 2016
      * @return \Anetwork\Respond\Facades\Respond
      */
     protected function httpNotFound()
@@ -123,13 +123,13 @@ trait RestException
      * If the request URI contains '/api/v'.
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
-     * @param Request $request
+     * @since  11 Nov 2016
+     * @param  Request $request
      * @return bool
      */
     protected function isApiCall(Request $request)
     {
-        if(strpos($request->getUri(), 'api') || $request->wantsJson()){
+        if(strpos($request->getUri(), 'api') || $request->wantsJson()) {
             return true;
         }
 
@@ -140,17 +140,18 @@ trait RestException
      * Get Trace in development mode
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
-     * @param Exception $exception
+     * @since  11 Nov 2016
+     * @param  Exception $exception
      * @return void
      */
-    private function getTrace(Exception $exception){
+    private function getTrace(Exception $exception)
+    {
 
-        if(config('app.debug')){
+        if(config('app.debug')) {
 
             $traces = $exception->getTrace();
 
-            if(! empty($traces)){
+            if(! empty($traces)) {
                 foreach ($traces as $trace){
                     unset($trace['args']);
                     $this->trace[] = $trace;
@@ -165,12 +166,13 @@ trait RestException
      * Render json exception
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
-     * @since 11 Nov 2016
-     * @param Request $request
-     * @param Exception $exception
+     * @since  11 Nov 2016
+     * @param  Request   $request
+     * @param  Exception $exception
      * @return \Anetwork\Respond\Facades\Respond
      */
-    public function renderRestException(Request $request, Exception $exception){
+    public function renderRestException(Request $request, Exception $exception)
+    {
 
         if(! $this->isApiCall($request)) {
             return parent::render($request, $exception);
