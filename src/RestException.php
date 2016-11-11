@@ -39,11 +39,11 @@ trait RestException
 
         $this->getTrace($exception);
 
-        if($exception instanceof ModelNotFoundException) {
+        if ($exception instanceof ModelNotFoundException) {
             return $this->modelNotFound($message);
-        } elseif($exception instanceof NotFoundHttpException) {
+        } elseif ($exception instanceof NotFoundHttpException) {
             return $this->httpNotFound();
-        } elseif($exception instanceof BadRequestHttpException) {
+        } elseif ($exception instanceof BadRequestHttpException) {
             return $this->badRequest($message);
         }
 
@@ -72,7 +72,7 @@ trait RestException
      *
      * @author Alireza Josheghani <josheghani.dev@gmail.com>
      * @since  11 Nov 2016
-     * @param  $message
+     * @param  string $message
      * @return \Anetwork\Respond\Facades\Respond
      */
     protected function errorException($message)
@@ -129,7 +129,7 @@ trait RestException
      */
     protected function isApiCall(Request $request)
     {
-        if(strpos($request->getUri(), 'api') || $request->wantsJson()) {
+        if( strpos($request->getUri(), 'api') || $request->wantsJson()) {
             return true;
         }
 
@@ -147,11 +147,11 @@ trait RestException
     private function getTrace(Exception $exception)
     {
 
-        if(config('app.debug')) {
+        if (config('app.debug')) {
 
             $traces = $exception->getTrace();
 
-            if(! empty($traces)) {
+            if (!empty($traces)) {
                 foreach ($traces as $trace){
                     unset($trace['args']);
                     $this->trace[] = $trace;
@@ -174,7 +174,7 @@ trait RestException
     public function renderRestException(Request $request, Exception $exception)
     {
 
-        if(! $this->isApiCall($request)) {
+        if (!$this->isApiCall($request)) {
             return parent::render($request, $exception);
         }
 
